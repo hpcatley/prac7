@@ -3,7 +3,7 @@
 
 int PrefixMatcher::selectRouter(std::string networkAddress) {
     TrieNode* node = root;
-    int Router = NULL;
+    int Router = -1;
     for(char character : networkAddress) {
         int i = character - '0';
         if(node->children[i] == nullptr) {
@@ -34,7 +34,7 @@ struct PrefixMatcher::TrieNode {
     int routerNumber;
     TrieNode* children[2]; // Options for address only binary numbers 0 and 1
     TrieNode() {
-        routerNumber = NULL; // No match for router
+        routerNumber = -1; // No match for router
         for(int i=0; i<2; i++) {
             children[i] = nullptr;
         }
