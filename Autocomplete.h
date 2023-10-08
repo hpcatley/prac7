@@ -12,8 +12,8 @@ public:
     std::vector<std::string> getSuggestions(std::string partialWord);
     void insert(std::string word);
     Autocomplete();
-private:
     struct TrieNode;
+private:
     TrieNode* root;
     void getSuggestionsTrie(TrieNode* root, std::string partialWord,std::vector<std::string> suggestions, std::string currentWord);
 };
