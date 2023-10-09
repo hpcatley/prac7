@@ -1,5 +1,7 @@
 #include "Autocomplete.h"
 #include <string> 
+#include <vector>
+#include <iostream>
 
 // Define struct for the TrieNode
 struct Autocomplete::TrieNode {
@@ -28,7 +30,7 @@ void Autocomplete::insert(std::string word) {
         int i = c - 'a';
         if (node->children[i] == nullptr) {
             node->children[i] = new TrieNode();
-            
+
         }
         node = node->children[i];
     }
