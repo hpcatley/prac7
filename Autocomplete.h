@@ -1,4 +1,4 @@
-#ifndef AUTCOMPLETE_H
+#ifndef AUTOCOMPLETE_H
 #define AUTOCOMPLETE_H
 
 #include <iostream>
@@ -15,7 +15,7 @@ public:
 private:
     struct TrieNode;
     TrieNode* root;
-    void getSuggestionsTrie(TrieNode* root, std::string partialWord,std::vector<std::string> suggestions, std::string currentWord);
+    void getSuggestionsTrie(TrieNode* root, std::string partialWord,std::vector<std::string> knownWords, std::string currentWord);
 };
 
 

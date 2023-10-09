@@ -3,9 +3,9 @@
 
 // Define struct for the TrieNode
 struct Autocomplete::TrieNode {
-    TrieNode* children[26];
-    bool isEndOfTrie;
-
+    TrieNode* children[26]; // Vector defining all possible nodes (characters)
+    bool isEndOfTrie; // boolean to determine if the end of the trie has been reached (node has no child)
+    // Constructor for TrieNode struct
     TrieNode() {
         for (int i=0; i < 26; i++) {
             children[i] = nullptr;
@@ -24,10 +24,11 @@ Autocomplete::Autocomplete() {
 // letters as nodes as needed)
 void Autocomplete::insert(std::string word) {
     TrieNode* node = root;
-    for (char character : word) {
-        int i = character - 'a';
+    for (char c : word) {
+        int i = c - 'a';
         if (node->children[i] == nullptr) {
             node->children[i] = new TrieNode();
+            
         }
         node = node->children[i];
     }
@@ -37,35 +38,35 @@ void Autocomplete::insert(std::string word) {
 // Function to provide suggestions based on what has been typed so far
 std::vector<std::string> Autocomplete::getSuggestions(std::string partialWord) {
     TrieNode* node = root;
-    std::vector<std::string> suggestions;
+    std::vector<std::string> knownWords;
     std::string currentSuggestion = "";
 
     for (char character : partialWord) {
         int i = character - 'a';
         if(node->children[i] == nullptr) {
-            return suggestions; 
+            return knownWords; 
         }
         node = node->children[i];
         currentSuggestion = currentSuggestion + character;
     }
 
-    getSuggestionsTrie(node, partialWord, suggestions, currentSuggestion);
-    return suggestions;
+    getSuggestionsTrie(node, partialWord, knownWords, currentSuggestion);
+    return knownWords;
 }
 
 // Secondary suggestion function to facilitate the use of 
 // a trie
-void Autocomplete::getSuggestionsTrie(TrieNode* node, std::string partialWord, std::vector<std::string> suggestions, std::string currentSuggestion) {
+void Autocomplete::getSuggestionsTrie(TrieNode* node, std::string partialWord, std::vector<std::string> knownWords, std::string currentSuggestion) {
     if(node == nullptr) {
         return;
     }
     if (node->isEndOfTrie) {
-        suggestions.push_back(currentSuggestion);
+        knownWords.push_back(currentSuggestion);
     }
     for( char character = 'a'; character <= 'z'; character++) {
         int i = character - 'a';
         if(node->children[i] != nullptr) {
-            getSuggestionsTrie(node->children[i], partialWord, suggestions, currentSuggestion + character);
+            getSuggestionsTrie(node->children[i], partialWord, knownWords, currentSuggestion + character);
         }
     }
 }
