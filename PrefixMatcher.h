@@ -7,8 +7,8 @@ public:
     int selectRouter(std::string networkAddress);
     void insert(std::string address, int routerNumber);
     PrefixMatcher();
-    struct TrieNode;
 private:
+    struct TrieNode;
     TrieNode* root;
     int* selectRouterTrie(TrieNode* node);
 };

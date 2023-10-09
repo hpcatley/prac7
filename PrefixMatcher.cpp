@@ -1,6 +1,17 @@
 #include "PrefixMatcher.h"
 #include <string>
 
+struct PrefixMatcher::TrieNode {
+    int routerNumber;
+    TrieNode* children[2]; // Options for address only binary numbers 0 and 1
+    TrieNode() {
+        routerNumber = -1; // No match for router
+        for(int i=0; i<2; i++) {
+            children[i] = nullptr;
+        }
+    }
+};
+
 int PrefixMatcher::selectRouter(std::string networkAddress) {
     TrieNode* node = root;
     int Router = -1;
@@ -29,17 +40,6 @@ void PrefixMatcher::insert(std::string address, int routerNumber) {
 PrefixMatcher::PrefixMatcher() {
     root = new TrieNode();
 }
-
-struct PrefixMatcher::TrieNode {
-    int routerNumber;
-    TrieNode* children[2]; // Options for address only binary numbers 0 and 1
-    TrieNode() {
-        routerNumber = -1; // No match for router
-        for(int i=0; i<2; i++) {
-            children[i] = nullptr;
-        }
-    }
-};
 
 int* PrefixMatcher::selectRouterTrie(TrieNode* node) {
     int* Array = new int[2];
