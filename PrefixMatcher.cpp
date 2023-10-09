@@ -41,6 +41,42 @@ struct PrefixMatcher::TrieNode {
     }
 };
 
-int PrefixMatcher::selectRouterTrie(TrieNode* node) {
+int* PrefixMatcher::selectRouterTrie(TrieNode* node) {
+    int* Array = new int[2];
+    Array[0] = -1;
+    Array[1] = 0;
+    if(node == nullptr) {
+        return Array;
+    }
 
+    if(node->children[0] != nullptr) {
+        int* leftRouter = selectRouterTrie(node->children[0]);
+
+        if(node->children[1] != nullptr) {
+            int* rightRouter = selectRouterTrie(node->children[1]);
+            if(leftRouter[1] >= rightRouter[1]) {
+                Array[0] = leftRouter[0];
+                Array[1] = leftRouter[1] + 1;
+                return Array;
+            }
+            else if (leftRouter[1] < rightRouter[1]) {
+                Array[0] = rightRouter[0];
+                Array[1] = rightRouter[1]+1;
+            }
+        }
+        else {
+            Array[0] = leftRouter[0];
+            Array[1] = leftRouter[1] + 1;
+        }
+    }
+    else if(node->children[1] != nullptr) {
+        int* rightRouter = selectRouterTrie(node->children[1]);
+        Array[0] = rightRouter[0];
+        Array[1] = rightRouter[1];
+    }
+    else {
+        Array[0] = node->routerNumber;
+        Array[1] = 0;
+        return Array;
+    }
 }

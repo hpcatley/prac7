@@ -10,7 +10,7 @@ public:
     struct TrieNode;
 private:
     TrieNode* root;
-    int selectRouterTrie(TrieNode* node);
+    int* selectRouterTrie(TrieNode* node);
 };
 
 #endif
